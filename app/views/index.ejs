@@ -45,7 +45,7 @@
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/token",
+            url: "http://localhost:8080/api/token",
             headers: { "x-access-token": x_access_token },
             complete: function (xhr, textStatus) {
                 if (xhr.status === 401) {

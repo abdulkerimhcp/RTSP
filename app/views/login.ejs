@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="text" id="username" placeholder="username">
+    <input type="password" id="password" placeholder="password">
+    <button>Sign In</button>
+    <br>
+    <span><a href="/register">Register</a></span>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        //Sign In Butonununa tıklandığında girişin yapılması
+        $('button').click(() => {
+            $.ajax({
+                url: "http://localhost:8080/login",
+                type: "POST",
+                data: { username: $('#username').val(), password: $('#password').val() },
+                success: async function (data) {
+                    if (data.accessToken !== null) {
+                        await localStorage.setItem('x-access-token', data.accessToken);
+
+                        window.location.href = "http://localhost:8080/";
+                    } else {
+                        alert(data.message)
+                    }
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>

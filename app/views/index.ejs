@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTSP</title>
+
+</head>
+
+<body>
+    <a id="logout" href="/login">logout</a>
+    
+    <div class="play-area-sub">
+        <h3>The Stream</h3>
+        <canvas id="stream" width="320" height="240"></canvas>
+    </div>
+    <div class="play-area-sub">
+        <h3>The Snapshot</h3>
+        <canvas id="capture" width="320" height="240"></canvas>
+    </div>
+
+    <button id="btn-snapshot" type="button" class="button">
+        Snapshot Image
+    </button>
+    <button id="btn-download" type="button" class="button">
+        Download Image
+    </button>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="jsmpeg.min.js"></script>
+
+    <script type="text/javascript" src="html2canvas.js"></script>
+
+    <script src="https://superal.github.io/canvas2image/canvas2image.js"></script>
+
+
+    <script type="text/javascript">
+        //Login işlemi yapılmadan index'e girilmemesi
+        const x_access_token = localStorage.getItem('x-access-token');
+
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/token",
+            headers: { "x-access-token": x_access_token },
+            complete: function (xhr, textStatus) {
+                if (xhr.status === 401) {
+                    window.location.href = "http://localhost:8080/login";
+                }
+            }
+        });
+
+        //RTSP yayının canvasta görüntülemesi
+        let player = new JSMpeg.Player("ws://localhost:9999", {
+            canvas: document.getElementById("stream"),
+            preserveDrawingBuffer: true,
+        });
+
+
+        const stream = document.getElementById("stream");
+        const capture = document.getElementById("capture");
+        capture.width = stream.width;
+        capture.height = stream.height;
+        const s = document.getElementById("s");
+        const btnSnapshot = document.getElementById("btn-snapshot");
+        const btnDownload = document.getElementById("btn-download");
+        const btnlogout = document.getElementById("logout");
+
+        btnSnapshot.addEventListener("click", captureSnapshot);
+        btnDownload.addEventListener("click", downloadSnapshot);
+        btnlogout.addEventListener("click", logout);
+
+        //Snapshot alınamsı kullanıcıya gösterilmesi ve veritabanına kaydedilmesi
+        async function captureSnapshot() {
+            const ctx = capture.getContext("2d");
+            ctx.drawImage(stream, 0, 0, stream.width, stream.height);
+
+            const canvas = await html2canvas(stream);
+            const base64image = canvas.toDataURL("image/png");
+            console.log(base64image);
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/",
+                data: { image: base64image },
+            });
+        }
+
+        //Snapshot olarak alınan görselin indirilmesi
+        function downloadSnapshot() {
+            Canvas2Image.saveAsImage(capture, capture.width, capture.height)
+        }
+
+        //Kullanıcı Çıkış
+        function logout() {
+            localStorage.removeItem("x-access-token");
+            window.location.href = "http://localhost:8080/login";
+        }
+
+    </script>
+</body>
+
+</html>

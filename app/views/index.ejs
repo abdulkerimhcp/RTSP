@@ -11,7 +11,7 @@
 
 <body>
     <a id="logout" href="/login">logout</a>
-    
+
     <div class="play-area-sub">
         <h3>The Stream</h3>
         <canvas id="stream" width="320" height="240"></canvas>
@@ -19,8 +19,9 @@
     <div class="play-area-sub">
         <h3>The Snapshot</h3>
         <canvas id="capture" width="320" height="240"></canvas>
-    </div>
 
+    </div>
+    <span id="path"></span><br><br><br>
     <button id="btn-snapshot" type="button" class="button">
         Snapshot Image
     </button>
@@ -63,6 +64,7 @@
 
         const stream = document.getElementById("stream");
         const capture = document.getElementById("capture");
+        const path = document.getElementById("path");
         capture.width = stream.width;
         capture.height = stream.height;
         const s = document.getElementById("s");
@@ -81,12 +83,14 @@
 
             const canvas = await html2canvas(stream);
             const base64image = canvas.toDataURL("image/png");
-            console.log(base64image);
 
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8080/",
                 data: { image: base64image },
+                success: (data) => {
+                    path.innerHTML = `path : ${data.path}`
+                }
             });
         }
 

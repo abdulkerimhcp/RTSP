@@ -1,6 +1,7 @@
 const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
+const Log = db.log;
 
 const Op = db.Sequelize.Op;
 
@@ -51,6 +52,10 @@ exports.signin = (req, res) => {
 
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400, // 24 hours
+      });
+
+      Log.create({
+        username: req.body.username,
       });
 
       res.status(200).json({

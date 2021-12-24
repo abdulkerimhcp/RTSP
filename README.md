@@ -5,17 +5,34 @@ Real Time Streaming Protocol ile gelen yayını canvasla görüntülemek ve iste
 snapshotların kayıt edilmesi.
 
 
+## Bilgisayarınızda Çalıştırın
 
-## Kurulum
+Projeyi klonlayın
 
-Bu projeyi ayağı kaldırmak için çalıştırın
+```bash
+  git clone https://github.com/abdulkerimhcp/RTSP.git
+```
+
+Proje dizinine gidin
+
+```bash
+  cd RTSP
+```
+
+Gerekli paketleri yükleyin
 
 ```bash
   npm install
+```
+
+Sunucuyu çalıştırın
+
+```bash
   npm start
 ```
 
-  [http://localhost:8080/](http://localhost:8080/)
+[http://localhost:8080/](http://localhost:8080/)
+
 # Kullanılan Kütüphaneler
 
 | |

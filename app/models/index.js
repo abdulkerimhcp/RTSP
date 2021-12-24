@@ -21,5 +21,6 @@ db.sequelize = sequelize;
 //Veritabanı models
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.snapshot = require("../models/snapshot.model.js")(sequelize, Sequelize);
+db.log = require("../models/log.model.js")(sequelize, Sequelize);
 
 module.exports = db;

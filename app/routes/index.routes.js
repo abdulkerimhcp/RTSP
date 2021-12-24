@@ -16,5 +16,5 @@ module.exports = function (app) {
   //register get
   app.post("/register", controllerr.signup);
   //token get
-  app.get("/token", authJwt.verifyToken);
+  app.get("/api/token", authJwt.verifyToken);
 };

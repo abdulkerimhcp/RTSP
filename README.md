@@ -66,9 +66,12 @@ Sunucuyu çalıştırın
 ```http
   GET /api/user/${id}
 ```
-| Parametre | Tip     | Açıklama                |
+| Headers | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `x-access-token` | `string` | **Gerekli**. API anahtarınız. |
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
 | `id`      | `string` | **Gerekli**. Çağrılacak öğenin anahtar değeri |
 
 #### Kullanıcı Güncelle
@@ -76,20 +79,28 @@ Sunucuyu çalıştırın
 ```http
   PUT /api/user/${id}
 ```
-| Parametre | Tip     | Açıklama                |
+| Headers | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `x-access-token` | `string` | **Gerekli**. API anahtarınız. |
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
 | `id`      | `string` | **Gerekli**. Çağrılacak öğenin anahtar değeri |
+
 
 #### Kullanıcı Sil
 
 ```http
   DELETE /api/user/${id}
 ```
-| Parametre | Tip     | Açıklama                |
+| Headers | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
 | `x-access-token` | `string` | **Gerekli**. API anahtarınız. |
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
 | `id`      | `string` | **Gerekli**. Çağrılacak öğenin anahtar değeri |
+
 
 #### Kullanıcı Giriş
 

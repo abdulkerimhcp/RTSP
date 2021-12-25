@@ -18,7 +18,6 @@ verifyToken = (req, res, next) => {
       return res.status(401).json({ token: false });
     }
     req.userId = decoded.id;
-    res.json({ token: true });
     next();
   });
 };
